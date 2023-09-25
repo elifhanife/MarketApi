@@ -10,9 +10,9 @@ namespace Services.Contracts
 	public interface ICustomerService
 	{
 		IEnumerable<Customer> GetAllCustomers(bool trackChanges);
-		Customer GetOneCustomerById(string id, bool trackChanges);
+		Customer GetOneCustomerById(int id, bool trackChanges);
 		Customer CreateOneCustomer(Customer customer);
-		void UpdateOneCustomer(string id, Customer customer, bool trackChanges);
-		void DeleteOneCustomer(string id, bool trackChanges);
+		void UpdateOneCustomer(int id, Customer customer, bool trackChanges);
+		void DeleteOneCustomer(int id, bool trackChanges);
 	}
 }

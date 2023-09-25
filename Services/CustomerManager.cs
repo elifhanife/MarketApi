@@ -29,7 +29,7 @@ namespace Services
 			return customer;
 		}
 
-		public void DeleteOneCustomer(string id, bool trackChanges)
+		public void DeleteOneCustomer(int id, bool trackChanges)
 		{
 			var entity = _manager.Customer.GetOneCustomerById(id, trackChanges);
 			if (entity == null)
@@ -44,12 +44,12 @@ namespace Services
 			return _manager.Customer.GetAllCustomers(trackChanges);
 		}
 
-		public Customer GetOneCustomerById(string id, bool trackChanges)
+		public Customer GetOneCustomerById(int id, bool trackChanges)
 		{
 			return _manager.Customer.GetOneCustomerById(id,trackChanges);
 		}
 
-		public void UpdateOneCustomer(string id, Customer customer, bool trackChanges)
+		public void UpdateOneCustomer(int id, Customer customer, bool trackChanges)
 		{
 			var entity = _manager.Customer.GetOneCustomerById(id, trackChanges);
 			if (entity == null)
@@ -60,6 +60,8 @@ namespace Services
 
 			entity.CustomerName = customer.CustomerName;
 			entity.CustomerSurname = customer.CustomerSurname;
+			entity.CustomerPhoneNumber = customer.CustomerPhoneNumber;
+			entity.CustomerAddress = customer.CustomerAddress;
 			entity.CustomerPassword = customer.CustomerPassword;
 			entity.CustomerStatus = customer.CustomerStatus;
 

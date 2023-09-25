@@ -22,23 +22,26 @@ namespace Presentation.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult GetAllCustomer()
+		public IActionResult GetAllCustomers()
 		{
 			try
 			{
 				var customers = _manager.CustomerService.GetAllCustomers(false);
+				if(!customers.Any())
+				{
+					return NotFound();
+				}
 				return Ok(customers);
 			}
 			catch (Exception ex)
 			{
 				throw new Exception(ex.Message);
-				throw;
 			}
 		}
 
-		[HttpGet("{id:length(11)}")]
+		[HttpGet("{id:int}")]
 
-		public IActionResult GetOneCustomer([FromRoute(Name = "id")] string id)
+		public IActionResult GetOneCustomer([FromRoute(Name = "id")] int id)
 		{
 			try
 			{
@@ -65,9 +68,21 @@ namespace Presentation.Controllers
 				if (customer is null)
 					return BadRequest();
 
-				_manager.CustomerService.CreateOneCustomer(customer);
+				var checkCustomer = _manager.CustomerService
+					.GetAllCustomers(false)
+					.Where(c => c.CustomerPhoneNumber == customer.CustomerPhoneNumber
+					&& c.CustomerPassword == customer.CustomerPassword
+					&& c.CustomerStatus == customer.CustomerStatus);
 
-				return StatusCode(201, customer);
+				if (!checkCustomer.Any())
+				{
+					_manager.CustomerService.CreateOneCustomer(customer);
+					return StatusCode(201, customer);
+				}
+				else
+				{
+					return BadRequest();
+				}
 			}
 			catch (Exception ex)
 			{
@@ -75,8 +90,8 @@ namespace Presentation.Controllers
 			}
 		}
 
-		[HttpPut("{id:length(11)}")]
-		public IActionResult UpdateOneCustomer([FromRoute(Name = "id")] string id,
+		[HttpPut("{id:int}")]
+		public IActionResult UpdateOneCustomer([FromRoute(Name = "id")] int id,
 			[FromBody] Customer customer)
 		{
 			try
@@ -86,7 +101,7 @@ namespace Presentation.Controllers
 
 				_manager.CustomerService.UpdateOneCustomer(id, customer, true);
 
-				return NoContent();
+				return Ok(customer);
 
 			}
 			catch (Exception ex)
@@ -95,8 +110,8 @@ namespace Presentation.Controllers
 			}
 		}
 
-		[HttpDelete("{id:length(11)}")]
-		public IActionResult DeleteOneCustomer([FromRoute(Name = "id")] string id)
+		[HttpDelete("{id:int}")]
+		public IActionResult DeleteOneCustomer([FromRoute(Name = "id")] int id)
 		{
 			try
 			{
@@ -110,7 +125,7 @@ namespace Presentation.Controllers
 			}
 		}
 
-		[HttpPatch("{id:length(11)}")]
+		/*[HttpPatch("{id:int}")]
 		public IActionResult PartiallyUpdateOneCustomer([FromRoute(Name = "id")] string id,
 			[FromBody] JsonPatchDocument<Customer> customerPatch)
 		{
@@ -131,6 +146,6 @@ namespace Presentation.Controllers
 			{
 				throw new Exception(ex.Message);
 			}
-		}
+		}*/
 	}
 }

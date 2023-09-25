@@ -10,6 +10,9 @@ namespace Repositories.Contracts
 	public interface IRepositoryManager
 	{
 		ICustomerRepository Customer { get; }
+		ICategoryRepository Category { get; }
+		IProductRepository Product { get; }
+		IOrderedProductRepository OrderedProduct { get; }
 		void Save();
 	}
 }

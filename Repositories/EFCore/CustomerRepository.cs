@@ -22,7 +22,7 @@ namespace Repositories.EFCore
 		public IQueryable<Customer> GetAllCustomers(bool trackChanges) => 
 			FindAll(trackChanges);
 
-		public Customer GetOneCustomerById(string id, bool trackChanges) =>
+		public Customer GetOneCustomerById(int id, bool trackChanges) =>
 			FindByCondition(c => c.CustomerId.Equals(id), trackChanges)
 			.SingleOrDefault();
 

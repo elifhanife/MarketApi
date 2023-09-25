@@ -11,7 +11,7 @@ namespace Repositories.Contracts
 	{
 		IQueryable<Customer> GetAllCustomers(bool trackChanges);
 
-		Customer GetOneCustomerById(string id, bool trackChanges);
+		Customer GetOneCustomerById(int id, bool trackChanges);
 
 		void CreateOneCustomer(Customer customer);
 		void UpdateOneCustomer(Customer customer);

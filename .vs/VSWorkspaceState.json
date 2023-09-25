@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Entities",
+    "\\Entities\\Models",
+    "\\Presentation",
+    "\\Presentation\\Controllers",
+    "\\WebApi"
+  ],
+  "PreviewInSolutionExplorer": false
+}
